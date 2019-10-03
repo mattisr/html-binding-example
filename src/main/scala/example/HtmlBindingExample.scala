@@ -4,8 +4,8 @@ import com.thoughtworks.binding.Binding
 import com.thoughtworks.binding.Binding.{BindingSeq, Constants, Var}
 import com.thoughtworks.binding.bindable._
 import org.lrng.binding.html
-import org.lrng.binding.html.NodeBinding
-import org.scalajs.dom.raw.{Event, Node}
+import org.lrng.binding.html.{NodeBinding, NodeBindingSeq}
+import org.scalajs.dom.raw.{Event, HTMLDivElement, Node}
 
 import scala.xml.{Elem, NodeBuffer}
 
@@ -30,8 +30,8 @@ class HtmlBindingExample extends IDEHelpers {
     * Although the return type of the method is Elem, the macro will transform this to a Binding[Node],
     * which is a dynamic observed function that can change in response to user input or other events.
     */
-  @html def simpleBinding =
-    <div>This static tag will be transformed into a Binding[Node]</div>
+  @html def simpleBinding: NodeBinding[HTMLDivElement] =
+    <div>This static tag will be transformed into a NodeBinding[HTMLDivElement]</div>
 
   /**
     * This render method combines Binding[Node] values that are declared in this class.
@@ -39,7 +39,7 @@ class HtmlBindingExample extends IDEHelpers {
     *
     * Note that calling .bind is not required inside tags, but can optionally be used: i.e. {simpleBinding.bind}.
     */
-  @html def render() = {
+  @html def render(): NodeBinding[HTMLDivElement] = {
     <div id="container">
       {simpleBinding}
       {changingBinding}
@@ -73,13 +73,13 @@ class HtmlBindingExample extends IDEHelpers {
     *
     * Because the Var's bound value is used the <div> tag, no additional context is needed.
     */
-  @html val changingBinding = {
+  @html val changingBinding: NodeBinding[HTMLDivElement] = {
     <div onclick={_: Event => state.value = "You clicked me!"}>
       {state.bind}
     </div>
   }
 
-  @html def stringInDiv(s: String) = <div>Your content here: {s}</div>
+  @html def stringInDiv(s: String): NodeBinding[HTMLDivElement] = <div>Your content here: {s}</div>
 
   /**
     * If a method or value returns a Binding[Node], no @html macro is needed.
@@ -89,7 +89,7 @@ class HtmlBindingExample extends IDEHelpers {
   /**
     * A sequence of nodes can be returned.
     */
-  @html val sequenceBinding = {
+  @html val sequenceBinding: NodeBindingSeq[Node] = {
     <div>Div 1</div>
     <div>Div 2</div>
   }
@@ -235,4 +235,7 @@ trait IDEHelpers {
       e: BindingSeq[Elem]): Binding[BindingSeq[Node]] = ???
   implicit def makeIntellijHappy(o: Binding[Object]): Binding[Node] = ???
   implicit def makeIntellijHappy(b: NodeBuffer): BindingSeq[Node] = ???
+  implicit def makeIntelliJHappy(e: Elem): NodeBinding[HTMLDivElement] = ???
+  implicit def makeIntelliJHappy(e: BindingSeq[Object]): Binding[BindingSeq[Node]] = ???
+  implicit def makeIntelliJHappy(e: Binding.F[com.thoughtworks.binding.Binding.BindingSeq[Object]]): Binding[BindingSeq[Node]] = ???
 }
