@@ -236,6 +236,6 @@ trait IDEHelpers {
   implicit def makeIntellijHappy(o: Binding[Object]): Binding[Node] = ???
   implicit def makeIntellijHappy(b: NodeBuffer): BindingSeq[Node] = ???
   implicit def makeIntelliJHappy(e: Elem): NodeBinding[HTMLDivElement] = ???
-  implicit def makeIntelliJHappy(e: BindingSeq[Object]): Binding[BindingSeq[Node]] = ???
+  //implicit def makeIntelliJHappy(e: BindingSeq[Object]): Binding[BindingSeq[Node]] = ??? // This line breaks the page, do not know why
   implicit def makeIntelliJHappy(e: Binding.F[com.thoughtworks.binding.Binding.BindingSeq[Object]]): Binding[BindingSeq[Node]] = ???
 }
