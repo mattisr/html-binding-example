@@ -41,6 +41,7 @@ class HtmlBindingExample extends IDEHelpers {
     */
   @html def render() = {
     <div id="container">
+      {<data:app-drawer></data:app-drawer>}
       {simpleBinding}
       {changingBinding}
       {noHtmlMacroNecessary}
