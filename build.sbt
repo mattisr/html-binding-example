@@ -16,6 +16,7 @@ resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies ++= Seq(
   "org.scala-js" %%% "scalajs-dom" % "0.9.7",
+  "com.thoughtworks.binding" %%% "dom" % "11.8.1",
   "org.lrng.binding" %%% "html" % "1.0.2",
   "com.thoughtworks.binding" %%% "futurebinding" % "11.8.1",
 )

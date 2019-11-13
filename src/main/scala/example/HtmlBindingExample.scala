@@ -1,6 +1,6 @@
 package example
 
-import com.thoughtworks.binding.Binding
+import com.thoughtworks.binding.{Binding, dom}
 import com.thoughtworks.binding.Binding.{BindingSeq, Constants, Var}
 import com.thoughtworks.binding.bindable._
 import org.lrng.binding.html
@@ -33,6 +33,8 @@ class HtmlBindingExample extends IDEHelpers {
   @html def simpleBinding =
     <div>This static tag will be transformed into a Binding[Node]</div>
 
+  @dom def atDomMethod = <p>If this is shown, then it works to mix @dom and @html annotations.</p>
+
   /**
     * This render method combines Binding[Node] values that are declared in this class.
     * Bindings can be easily composed inside HTML tags.
@@ -41,6 +43,7 @@ class HtmlBindingExample extends IDEHelpers {
     */
   @html def render() = {
     <div id="container">
+      {atDomMethod}
       {simpleBinding}
       {changingBinding}
       {noHtmlMacroNecessary}
